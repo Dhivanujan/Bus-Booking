@@ -1,13 +1,11 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import { env } from "./config/env";
 
 import busRoutes from "./routes/bus.routes";
 import bookingRoutes from "./routes/booking.routes";
 import authRoutes from "./routes/auth.routes";
 import { errorHandler } from "./middlewares/errorHandler";
-
-dotenv.config();
 
 const app = express();
 
@@ -24,8 +22,8 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = env.PORT;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT} in ${env.NODE_ENV} mode`);
 });
