@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+---
+
+# USER MODEL (AUTH SYSTEM READY)
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  password  String
+
+  role      Role     @default(PASSENGER)
+
+  bookings  Booking[]
+
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  PASSENGER
+  DRIVER
+}
+
+---
+
+# BUS MODEL
+model Bus {
+  id         String   @id @default(uuid())
+  regNumber  String   @unique
+  type       String   // Luxury, Semi Luxury, Normal
+  capacity   Int
+
+  schedules  Schedule[]
+
+  createdAt DateTime @default(now())
+}
+
+---
+
+# ROUTE MODEL
+model Route {
+  id        String @id @default(uuid())
+  from      String
+  to        String
+
+  schedules Schedule[]
+
+  createdAt DateTime @default(now())
+}
+
+---
+
+# SCHEDULE MODEL (BUS RUNNING TIME)
+model Schedule {
+  id            String   @id @default(uuid())
+
+  busId         String
+  bus           Bus      @relation(fields: [busId], references: [id])
+
+  routeId       String
+  route         Route    @relation(fields: [routeId], references: [id])
+
+  departureTime DateTime
+  price         Float
+
+  bookings      Booking[]
+
+  createdAt     DateTime @default(now())
+}
+
+---
+
+# BOOKING MODEL (CORE LOGIC)
+model Booking {
+  id          String   @id @default(uuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  scheduleId  String
+  schedule    Schedule @relation(fields: [scheduleId], references: [id])
+
+  seatNumber  Int
+
+  status      BookingStatus @default(PENDING)
+
+  createdAt   DateTime @default(now())
+
+  updatedAt   DateTime @updatedAt
+
+  @@unique([scheduleId, seatNumber])
+}
+
+---
+
+# BOOKING STATUS ENUM
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}

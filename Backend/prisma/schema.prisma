@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+  DRIVER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  phone     String    @unique
+  password  String
+  name      String
+  role      Role      @default(USER)
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Bus {
+  id         String     @id @default(uuid())
+  plateNo    String     @unique
+  capacity   Int
+  type       String     // AC, Non-AC, Sleeper
+  schedules  Schedule[]
+  createdAt  DateTime   @default(now())
+}
+
+model Route {
+  id          String     @id @default(uuid())
+  origin      String
+  destination String
+  distance    Float
+  schedules   Schedule[]
+}
+
+model Schedule {
+  id            String       @id @default(uuid())
+  busId         String
+  routeId       String
+  departureTime DateTime
+  arrivalTime   DateTime
+  price         Decimal      @db.Decimal(10, 2)
+  bus           Bus          @relation(fields: [busId], references: [id])
+  route         Route        @relation(fields: [routeId], references: [id])
+  bookings      Booking[]
+  bookedSeats   BookedSeat[]
+}
+
+model Booking {
+  id          String       @id @default(uuid())
+  userId      String
+  scheduleId  String
+  status      BookingStatus @default(PENDING)
+  totalAmount Decimal      @db.Decimal(10, 2)
+  user        User         @relation(fields: [userId], references: [id])
+  schedule    Schedule     @relation(fields: [scheduleId], references: [id])
+  seats       BookedSeat[]
+  payment     Payment?
+  createdAt   DateTime     @default(now())
+}
+
+model BookedSeat {
+  id         String   @id @default(uuid())
+  scheduleId String
+  bookingId  String
+  seatNumber Int
+  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+  booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  // CRITICAL: Prevents double booking at the database level!
+  @@unique([scheduleId, seatNumber]) 
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  bookingId     String        @unique
+  amount        Decimal       @db.Decimal(10, 2)
+  status        PaymentStatus @default(PENDING)
+  transactionId String?
+  booking       Booking       @relation(fields: [bookingId], references: [id])
+  createdAt     DateTime      @default(now())
+}
