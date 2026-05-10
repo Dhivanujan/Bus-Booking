@@ -12,15 +12,21 @@ import Footer from './components/Footer';
 function App() {
   return (
     <Router>
-      <Navbar />
-      <Hero />
-      <SearchWidget />
-      <Features />
-      <PopularRoutes />
-      <HowItWorks />
-      <Testimonials />
-      <AppCTA />
-      <Footer />
+      <div className="app-shell">
+        <div className="highway-flow"></div>
+        <div className="particle-field"></div>
+        <div className="app-content">
+          <Navbar />
+          <Hero />
+          <SearchWidget />
+          <Features />
+          <PopularRoutes />
+          <HowItWorks />
+          <Testimonials />
+          <AppCTA />
+          <Footer />
+        </div>
+      </div>
     </Router>
   );
 }
