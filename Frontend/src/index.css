@@ -1,53 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
+/* ==========================================
+   DESIGN TOKENS — derived from hero.png
+   Deep Navy, Sunset Orange, Pink, Teal
+   ========================================== */
 :root {
-  /* Colors */
-  --color-bg-base: #070B14; /* Quantum Midnight Base */
-  --color-bg-elevated: #111827; /* Elevated Surface */
-  --color-primary: #B3FF00; /* Electric Lime Dust */
-  --color-primary-glow: rgba(179, 255, 0, 0.4);
-  --color-secondary: #00F0FF; /* Cyan Accent */
-  
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #9CA3AF;
-  --color-text-muted: #6B7280;
-  
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-focus: rgba(179, 255, 0, 0.5);
+  /* Primary palette */
+  --navy: #0B1D3A;
+  --navy-light: #132B52;
+  --navy-mid: #1A3A6E;
+  --blue-accent: #2E7DDB;
+  --blue-glow: rgba(46, 125, 219, 0.35);
 
-  /* Glassmorphism */
-  --glass-bg: rgba(17, 24, 39, 0.6);
+  /* Warm accents from sunset */
+  --sunset: #F4943E;
+  --sunset-light: #FFB366;
+  --sunset-glow: rgba(244, 148, 62, 0.3);
+  --gold: #F8C94B;
+
+  /* Secondary accents */
+  --pink: #D94B8A;
+  --teal: #2EBFA5;
+
+  /* Neutrals */
+  --white: #FFFFFF;
+  --off-white: #F0F2F5;
+  --gray-100: #E5E7EB;
+  --gray-300: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+
+  /* Functional */
+  --bg: var(--navy);
+  --text: var(--white);
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --border: rgba(255, 255, 255, 0.1);
+  --glass: rgba(11, 29, 58, 0.65);
   --glass-border: rgba(255, 255, 255, 0.08);
-  
-  /* Utilities */
-  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sizing */
+  --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 24px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
   --radius-full: 9999px;
+
+  --transition: 0.25s ease;
+  --max-width: 1200px;
 }
 
-* {
+/* ==========================================
+   RESET & BASE
+   ========================================== */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Outfit', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  background-color: var(--color-bg-base);
-  color: var(--color-text-primary);
-  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  line-height: 1.6;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(179, 255, 0, 0.03), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.03), transparent 25%);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 a {
@@ -55,166 +83,183 @@ a {
   color: inherit;
 }
 
-ul {
-  list-style: none;
-}
+ul { list-style: none; }
 
 button {
   cursor: pointer;
   border: none;
   background: none;
   font-family: inherit;
+  color: inherit;
 }
 
-input, select {
+input, select, textarea {
   font-family: inherit;
-}
-
-/* Glass Component Classes */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--color-primary-glow);
-  border-color: var(--color-border-focus);
-}
-
-/* Premium Buttons */
-.btn-primary {
-  background: var(--color-primary);
-  color: #000000;
-  padding: 12px 24px;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all var(--transition-fast);
-  box-shadow: 0 0 15px var(--color-primary-glow);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px var(--color-primary-glow);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--color-text-primary);
-  padding: 12px 24px;
-  border-radius: var(--radius-full);
-  font-weight: 500;
-  border: 1px solid var(--glass-border);
-  transition: all var(--transition-fast);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Inputs */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.form-control {
-  width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  color: var(--color-text-primary);
-  font-size: 1rem;
-  transition: all var(--transition-fast);
-}
-
-.form-control:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-glow);
 }
 
-.form-control::placeholder {
-  color: var(--color-text-muted);
+img {
+  max-width: 100%;
+  display: block;
 }
 
-/* Container */
+/* ==========================================
+   CONTAINER
+   ========================================== */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* Typography */
-h1, h2, h3, h4 {
-  color: var(--color-text-primary);
-  font-weight: 700;
-  line-height: 1.2;
+/* ==========================================
+   SECTION SPACING
+   ========================================== */
+.section {
+  padding: 100px 0;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(244, 148, 62, 0.12);
+  border: 1px solid rgba(244, 148, 62, 0.25);
+  border-radius: var(--radius-full);
+  color: var(--sunset);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg-base);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 550px;
+  line-height: 1.7;
+}
+
+/* ==========================================
+   GLASS MORPHISM
+   ========================================== */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--sunset), var(--sunset-light));
+  color: #000;
+  box-shadow: 0 4px 20px var(--sunset-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(244, 148, 62, 0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* ==========================================
+   FORM CONTROLS
+   ========================================== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.form-control {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--sunset);
+  box-shadow: 0 0 0 3px var(--sunset-glow);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--navy-mid); border-radius: 3px; }
+
+/* ==========================================
+   MINIMAL ANIMATIONS
+   ========================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
 }
 
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
+.fade-up-d1 { animation-delay: 0.1s; }
+.fade-up-d2 { animation-delay: 0.2s; }
+.fade-up-d3 { animation-delay: 0.3s; }
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+  .section { padding: 60px 0; }
+  .container { padding: 0 16px; }
+}

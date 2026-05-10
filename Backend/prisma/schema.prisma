@@ -26,7 +26,7 @@ enum PaymentStatus {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   email     String    @unique
   phone     String    @unique
   password  String
@@ -38,7 +38,7 @@ model User {
 }
 
 model Bus {
-  id         String     @id @default(uuid())
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   plateNo    String     @unique
   capacity   Int
   type       String     // AC, Non-AC, Sleeper
@@ -47,7 +47,7 @@ model Bus {
 }
 
 model Route {
-  id          String     @id @default(uuid())
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   origin      String
   destination String
   distance    Float
@@ -55,12 +55,12 @@ model Route {
 }
 
 model Schedule {
-  id            String       @id @default(uuid())
-  busId         String
-  routeId       String
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  busId         String       @db.ObjectId
+  routeId       String       @db.ObjectId
   departureTime DateTime
   arrivalTime   DateTime
-  price         Decimal      @db.Decimal(10, 2)
+  price         Float
   bus           Bus          @relation(fields: [busId], references: [id])
   route         Route        @relation(fields: [routeId], references: [id])
   bookings      Booking[]
@@ -68,11 +68,11 @@ model Schedule {
 }
 
 model Booking {
-  id          String       @id @default(uuid())
-  userId      String
-  scheduleId  String
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String       @db.ObjectId
+  scheduleId  String       @db.ObjectId
   status      BookingStatus @default(PENDING)
-  totalAmount Decimal      @db.Decimal(10, 2)
+  totalAmount Float
   user        User         @relation(fields: [userId], references: [id])
   schedule    Schedule     @relation(fields: [scheduleId], references: [id])
   seats       BookedSeat[]
@@ -81,9 +81,9 @@ model Booking {
 }
 
 model BookedSeat {
-  id         String   @id @default(uuid())
-  scheduleId String
-  bookingId  String
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  scheduleId String   @db.ObjectId
+  bookingId  String   @db.ObjectId
   seatNumber Int
   schedule   Schedule @relation(fields: [scheduleId], references: [id])
   booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
@@ -93,9 +93,9 @@ model BookedSeat {
 }
 
 model Payment {
-  id            String        @id @default(uuid())
-  bookingId     String        @unique
-  amount        Decimal       @db.Decimal(10, 2)
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  bookingId     String        @unique @db.ObjectId
+  amount        Float
   status        PaymentStatus @default(PENDING)
   transactionId String?
   booking       Booking       @relation(fields: [bookingId], references: [id])
