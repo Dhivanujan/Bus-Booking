@@ -1,5 +1,4 @@
 import { Star, Quote } from 'lucide-react';
-import './Testimonials.css';
 
 const reviews = [
   {
@@ -24,31 +23,33 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section id="reviews" className="section testimonials-section">
+    <section id="reviews" className="bg-navy-light/20 py-[60px] md:py-[100px]">
       <div className="container">
-        <div className="testimonials__header">
-          <span className="section-label">Testimonials</span>
-          <h2 className="section-title">What Travelers Say</h2>
-          <p className="section-subtitle">Real reviews from passengers who experienced the difference.</p>
+        <div className="text-center mb-14">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#f4943e1f] border border-[#f4943e40] rounded-full text-sunset text-[0.8rem] font-semibold tracking-[0.5px] uppercase mb-4">
+            Testimonials
+          </span>
+          <h2 className="text-[clamp(1.8rem,4vw,2.6rem)] font-extrabold leading-[1.15] mb-3">What Travelers Say</h2>
+          <p className="text-[1.05rem] text-white/70 max-w-[550px] leading-relaxed mx-auto">Real reviews from passengers who experienced the difference.</p>
         </div>
 
-        <div className="testimonials__grid">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reviews.map((r, i) => (
-            <div className="testimonial-card" key={i}>
-              <Quote size={24} className="testimonial-card__quote" />
-              <p className="testimonial-card__text">{r.text}</p>
-              <div className="testimonial-card__stars">
+            <div className="glass p-7 flex flex-col gap-5 hover:-translate-y-1 transition-all duration-300" key={i}>
+              <Quote size={24} className="text-sunset/50" />
+              <p className="text-[0.95rem] text-white/80 leading-relaxed flex-1">"{r.text}"</p>
+              <div className="flex gap-1">
                 {Array.from({ length: r.rating }).map((_, j) => (
-                  <Star key={j} size={16} fill="var(--gold)" color="var(--gold)" />
+                  <Star key={j} size={16} fill="var(--color-gold)" color="var(--color-gold)" />
                 ))}
               </div>
-              <div className="testimonial-card__author">
-                <div className="testimonial-card__avatar">
+              <div className="flex items-center gap-3 pt-3 border-t border-white/10">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sunset to-sunset-light flex items-center justify-center text-black font-bold text-sm shrink-0">
                   {r.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <div>
-                  <span className="testimonial-card__name">{r.name}</span>
-                  <span className="testimonial-card__route">{r.route}</span>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold">{r.name}</span>
+                  <span className="text-xs text-white/50">{r.route}</span>
                 </div>
               </div>
             </div>

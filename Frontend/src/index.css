@@ -1,247 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
 
-/* ==========================================
-   DESIGN TOKENS — derived from hero.png
-   Deep Navy, Sunset Orange, Pink, Teal
-   ========================================== */
-:root {
-  /* Primary palette */
-  --navy: #0B1D3A;
-  --navy-light: #132B52;
-  --navy-mid: #1A3A6E;
-  --blue-accent: #2E7DDB;
-  --blue-glow: rgba(46, 125, 219, 0.35);
 
-  /* Warm accents from sunset */
-  --sunset: #F4943E;
-  --sunset-light: #FFB366;
-  --sunset-glow: rgba(244, 148, 62, 0.3);
-  --gold: #F8C94B;
+@theme {
+  --color-navy: #0B1D3A;
+  --color-navy-light: #132B52;
+  --color-navy-mid: #1A3A6E;
+  --color-blue-accent: #2E7DDB;
+  --color-blue-glow: rgba(46, 125, 219, 0.35);
 
-  /* Secondary accents */
-  --pink: #D94B8A;
-  --teal: #2EBFA5;
+  --color-sunset: #F4943E;
+  --color-sunset-light: #FFB366;
+  --color-sunset-glow: rgba(244, 148, 62, 0.3);
+  --color-gold: #F8C94B;
 
-  /* Neutrals */
-  --white: #FFFFFF;
-  --off-white: #F0F2F5;
-  --gray-100: #E5E7EB;
-  --gray-300: #9CA3AF;
-  --gray-500: #6B7280;
-  --gray-700: #374151;
-  --gray-900: #111827;
+  --color-pink: #D94B8A;
+  --color-teal: #2EBFA5;
 
-  /* Functional */
-  --bg: var(--navy);
-  --text: var(--white);
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.45);
-  --border: rgba(255, 255, 255, 0.1);
-  --glass: rgba(11, 29, 58, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --color-white: #FFFFFF;
+  --color-off-white: #F0F2F5;
 
-  /* Sizing */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --radius-full: 9999px;
-
-  --transition: 0.25s ease;
-  --max-width: 1200px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ==========================================
-   RESET & BASE
-   ========================================== */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-navy text-white antialiased overflow-x-hidden font-sans;
+  }
+  #root {
+    @apply min-h-screen;
+  }
+  a {
+    @apply no-underline text-inherit;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
+@layer components {
+  .glass {
+    @apply bg-[#0b1d3aa6] backdrop-blur-[20px] border border-[#ffffff14] rounded-2xl;
+  }
+  .container {
+    @apply w-full max-w-[1200px] mx-auto px-6 md:px-4;
+  }
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--navy);
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-#root {
-  min-height: 100vh;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-ul { list-style: none; }
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-  color: inherit;
-}
-
-input, select, textarea {
-  font-family: inherit;
-  outline: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* ==========================================
-   CONTAINER
-   ========================================== */
-.container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ==========================================
-   SECTION SPACING
-   ========================================== */
-.section {
-  padding: 100px 0;
-}
-
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(244, 148, 62, 0.12);
-  border: 1px solid rgba(244, 148, 62, 0.25);
-  border-radius: var(--radius-full);
-  color: var(--sunset);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.section-title {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 12px;
-}
-
-.section-subtitle {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  max-width: 550px;
-  line-height: 1.7;
-}
-
-/* ==========================================
-   GLASS MORPHISM
-   ========================================== */
-.glass {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-}
-
-/* ==========================================
-   BUTTONS
-   ========================================== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 13px 28px;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--sunset), var(--sunset-light));
-  color: #000;
-  box-shadow: 0 4px 20px var(--sunset-glow);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(244, 148, 62, 0.45);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.btn-outline:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.35);
-}
-
-/* ==========================================
-   FORM CONTROLS
-   ========================================== */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-label {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.form-control {
-  width: 100%;
-  padding: 13px 16px;
-  background: rgba(0,0,0,0.25);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  color: var(--text);
-  font-size: 0.95rem;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.form-control:focus {
-  border-color: var(--sunset);
-  box-shadow: 0 0 0 3px var(--sunset-glow);
-}
-
-.form-control::placeholder {
-  color: var(--text-muted);
-}
-
-/* ==========================================
-   SCROLLBAR
-   ========================================== */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--navy); }
-::-webkit-scrollbar-thumb { background: var(--navy-mid); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--color-navy); }
+::-webkit-scrollbar-thumb { background: var(--color-navy-mid); border-radius: 3px; }
 
-/* ==========================================
-   MINIMAL ANIMATIONS
-   ========================================== */
+/* Minimal Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
@@ -255,11 +66,3 @@ img {
 .fade-up-d1 { animation-delay: 0.1s; }
 .fade-up-d2 { animation-delay: 0.2s; }
 .fade-up-d3 { animation-delay: 0.3s; }
-
-/* ==========================================
-   RESPONSIVE
-   ========================================== */
-@media (max-width: 768px) {
-  .section { padding: 60px 0; }
-  .container { padding: 0 16px; }
-}
