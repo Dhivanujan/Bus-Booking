@@ -43,7 +43,7 @@
     @apply bg-[#0b1d3aa6] backdrop-blur-[20px] border border-[#ffffff14] rounded-2xl;
   }
   .container {
-    @apply w-full max-w-[1200px] mx-auto px-6 md:px-4;
+    @apply w-full max-w-[1200px] mx-auto px-5 sm:px-6 md:px-8 lg:px-10;
   }
 }
 
