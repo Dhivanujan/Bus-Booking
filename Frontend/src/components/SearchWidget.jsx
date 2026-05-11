@@ -4,7 +4,7 @@ const SearchWidget = () => {
   return (
     <section
       id="search"
-      className="relative z-20 -mt-17.5 sm:-mt-22.5 lg:-mt-27.5 pb-20"
+      className="relative z-20 mt-10 sm:mt-12 lg:mt-14 pb-20"
     >
       <div className="container">
         <div className="glass-panel p-6 md:p-8">
