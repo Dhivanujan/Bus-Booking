@@ -36,7 +36,6 @@ const HowItWorks = () => {
     <section id="how" className="section relative">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="section-kicker">Seamless Experience</span>
           <h2 className="section-title mt-4">Book your luxury trip in four steps</h2>
           <p className="section-subtitle mt-3 mx-auto">
             From route discovery to onboard comfort, every step is streamlined for premium travel.

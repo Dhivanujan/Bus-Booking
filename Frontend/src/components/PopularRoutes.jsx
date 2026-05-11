@@ -56,7 +56,6 @@ const PopularRoutes = () => {
     <section id="routes" className="section relative">
       <div className="container">
         <div className="max-w-3xl mb-14 text-center lg:text-left mx-auto lg:mx-0">
-          <span className="section-kicker">Sri Lanka Routes</span>
           <h2 className="section-title mt-4">Discover premium intercity travel</h2>
           <p className="section-subtitle mt-3 mx-auto lg:mx-0">
             Curated luxury routes with panoramic coaches, predictable timings, and refined service.
@@ -89,10 +88,6 @@ const PopularRoutes = () => {
                 <span className="chip">
                   <Bus size={14} className="text-fuchsia-300" />
                   {r.departures} Daily
-                </span>
-                <span className="chip">
-                  <Sparkles size={14} className="text-amber-300" />
-                  Premium
                 </span>
               </div>
 

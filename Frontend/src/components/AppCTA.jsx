@@ -14,7 +14,6 @@ const AppCTA = () => {
         <div className="glass-panel p-8 md:p-12">
           <div className="grid lg:grid-cols-[1fr_0.9fr] gap-12 items-center">
             <div className="max-w-2xl">
-              <span className="section-kicker">Mobile Luxury Experience</span>
               <h2 className="section-title mt-4">Your journey, curated inside one app</h2>
               <p className="section-subtitle mt-3">
                 Book luxury buses, track rides live, unlock premium seat upgrades, and manage every detail on the go.

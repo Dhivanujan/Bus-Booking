@@ -32,7 +32,6 @@ const Features = () => {
     <section id="features" className="section relative">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="section-kicker">Premium Experience</span>
           <h2 className="section-title mt-4">Travel engineered for luxury intelligence</h2>
           <p className="section-subtitle mt-3 mx-auto">
             Every detail is tuned for effortless booking, consistent comfort, and confident arrivals.

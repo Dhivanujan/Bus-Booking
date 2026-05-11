@@ -26,7 +26,6 @@ const Testimonials = () => {
     <section id="reviews" className="section relative">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="section-kicker">Testimonials</span>
           <h2 className="section-title mt-4">Trusted by premium travelers</h2>
           <p className="section-subtitle mt-3 mx-auto">
             Real journeys from passengers who experienced refined comfort and intelligent booking.

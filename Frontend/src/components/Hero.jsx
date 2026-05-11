@@ -7,7 +7,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="relative overflow-hidden pt-32 md:pt-40 pb-32">
+    <section id="hero" className="relative overflow-hidden pt-32 md:pt-35 pb-32">
       <div className="absolute inset-0">
         <img
           src={heroImg}
@@ -19,8 +19,7 @@ const Hero = () => {
       <div className="absolute inset-0 hero-ambient"></div>
 
       <div className="container relative z-10">
-        <div className="max-w-140 mx-auto text-center">
-          <span className="section-kicker">Cinematic Mobility Network</span>
+        <div className="max-w-200 mx-auto text-center">
           <h1 className="hero-script mt-6 text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.05] text-white">
             Premium routes with <span className="text-sunset">precision arrivals</span> across Sri Lanka.
           </h1>
