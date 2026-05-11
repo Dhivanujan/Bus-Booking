@@ -4,9 +4,9 @@ const SearchWidget = () => {
   return (
     <section
       id="search"
-      className="relative z-20 -mt-[130px] pb-20 px-4"
+      className="relative z-20 -mt-[90px] sm:-mt-[110px] lg:-mt-[130px] pb-20"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="container">
         {/* Main Card */}
         <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#071120]/80 backdrop-blur-2xl shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
 
@@ -21,7 +21,7 @@ const SearchWidget = () => {
 
             {/* Top Header */}
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
-              <div>
+              <div className="text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 text-cyan-300 text-xs tracking-[0.25em] uppercase font-medium">
                   Smart Luxury Search
                 </div>
@@ -38,7 +38,7 @@ const SearchWidget = () => {
               </div>
 
               {/* Floating Stats */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center backdrop-blur-xl">
                   <h4 className="text-xl font-bold text-white">120+</h4>
                   <p className="text-xs text-[#9BA9C0] mt-1">Luxury Routes</p>
@@ -140,7 +140,7 @@ const SearchWidget = () => {
               <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
 
                 {/* Features */}
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
                   {[
                     'Live Seats',
                     'Instant Booking',
@@ -157,7 +157,7 @@ const SearchWidget = () => {
                 </div>
 
                 {/* Button */}
-                <button className="group relative overflow-hidden h-[64px] px-8 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-fuchsia-500 text-white font-semibold shadow-[0_10px_40px_rgba(59,130,246,0.45)] transition-all duration-500 hover:scale-[1.03]">
+                <button className="group relative overflow-hidden h-[64px] w-full md:w-auto px-8 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-fuchsia-500 text-white font-semibold shadow-[0_10px_40px_rgba(59,130,246,0.45)] transition-all duration-500 hover:scale-[1.03]">
                   <span className="relative z-10 flex items-center gap-3">
                     <Search size={19} />
                     Search Luxury Buses

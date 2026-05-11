@@ -31,9 +31,9 @@ const Testimonials = () => {
           <p className="section-subtitle mx-auto mt-3">Real reviews from passengers who experienced the LuxeBus difference.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((r, i) => (
-            <div className="glass-card p-7 flex flex-col gap-5 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(0,0,0,0.45)]" key={i}>
+            <div className="glass-card p-7 h-full flex flex-col gap-5 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(0,0,0,0.45)]" key={i}>
               <Quote size={24} className="text-sunset/70" />
               <p className="text-[0.95rem] text-[#C7D0E0]/80 leading-relaxed flex-1">"{r.text}"</p>
               <div className="flex gap-1">

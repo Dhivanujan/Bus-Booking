@@ -15,7 +15,7 @@ function App() {
       <div className="app-shell">
         <div className="highway-flow"></div>
         <div className="particle-field"></div>
-        <div className="app-content">
+        <div className="app-content pb-28 md:pb-0">
           <Navbar />
           <Hero />
           <SearchWidget />

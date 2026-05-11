@@ -7,14 +7,14 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="hero" className="relative min-h-[92vh] md:min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 hero-ambient"></div>
       <div className="absolute inset-0 z-0">
         <img src={heroImg} alt="Luxury buses on highway at sunset" className="w-full h-full object-cover object-center scale-[1.05] opacity-55" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F1A]/95 via-[#0F2027]/70 to-transparent"></div>
       </div>
 
-      <div className="relative z-10 pt-[120px] pb-[120px] container">
+      <div className="relative z-10 pt-[100px] md:pt-[120px] pb-[90px] md:pb-[120px] container">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
           <div className="max-w-[640px] fade-up">
             <span className="section-kicker">Smart Mobility Terminal</span>
@@ -41,7 +41,7 @@ const Hero = () => {
               </a>
             </div>
 
-            <div className="glass-card px-6 py-5 grid grid-cols-3 gap-5 max-w-[520px]">
+            <div className="glass-card px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 max-w-[520px] text-center sm:text-left">
               <div className="flex flex-col">
                 <span className="text-[1.2rem] font-extrabold text-sunset">50K+</span>
                 <span className="text-[0.8rem] text-[#C7D0E0]/60">Premium Riders</span>
@@ -57,7 +57,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="relative lg:justify-self-end w-full max-w-[520px] fade-up fade-up-d2">
+          <div className="relative w-full max-w-[520px] mx-auto lg:mx-0 lg:justify-self-end fade-up fade-up-d2">
             <div className="glass-card p-5">
               <div className="relative overflow-hidden rounded-2xl border border-white/10">
                 <img src={heroImg} alt="Luxury coach" className="w-full h-[320px] object-cover" />
@@ -69,7 +69,7 @@ const Hero = () => {
                 <span>Skyview Cabin</span>
               </div>
             </div>
-            <div className="absolute -top-6 -left-6 glass-panel px-4 py-3 text-[0.7rem] uppercase tracking-[0.2em] text-[#C7D0E0]/80">
+            <div className="absolute -top-5 left-4 lg:-top-6 lg:-left-6 glass-panel px-4 py-3 text-[0.7rem] uppercase tracking-[0.2em] text-[#C7D0E0]/80">
               Live Fleet Pulse
             </div>
           </div>

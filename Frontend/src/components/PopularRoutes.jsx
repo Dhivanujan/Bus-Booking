@@ -79,7 +79,7 @@ const PopularRoutes = () => {
       <div className="container relative z-10">
 
         {/* Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-16 text-center lg:text-left mx-auto lg:mx-0">
 
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl text-cyan-300 text-xs tracking-[0.25em] uppercase">
             <Sparkles size={14} />
@@ -93,7 +93,7 @@ const PopularRoutes = () => {
             </span>
           </h2>
 
-          <p className="mt-5 text-[#AAB6CC] text-[1.02rem] leading-relaxed max-w-2xl">
+          <p className="mt-5 text-[#AAB6CC] text-[1.02rem] leading-relaxed max-w-2xl mx-auto lg:mx-0">
             Explore the island’s most demanded premium bus routes with panoramic
             luxury coaches, AI-powered scheduling, and real-time travel comfort.
           </p>
@@ -120,10 +120,10 @@ const PopularRoutes = () => {
               <div className="relative z-10">
 
                 {/* Route Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
 
                   {/* From */}
-                  <div>
+                  <div className="text-center sm:text-left">
                     <span className="text-xs uppercase tracking-[0.18em] text-[#7E8CA5]">
                       Departure
                     </span>
@@ -146,7 +146,7 @@ const PopularRoutes = () => {
                   </div>
 
                   {/* To */}
-                  <div className="text-right">
+                  <div className="text-center sm:text-right">
                     <span className="text-xs uppercase tracking-[0.18em] text-[#7E8CA5]">
                       Arrival
                     </span>
@@ -181,7 +181,7 @@ const PopularRoutes = () => {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
                   {/* Price */}
                   <div>
@@ -216,7 +216,7 @@ const PopularRoutes = () => {
                 </div>
 
                 {/* Bottom Info */}
-                <div className="mt-6 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[#72819A]">
+                <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs uppercase tracking-[0.18em] text-[#72819A]">
                   <span className="flex items-center gap-2">
                     <MapPin size={12} />
                     Sri Lanka Luxury Route
