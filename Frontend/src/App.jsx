@@ -1,13 +1,9 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import SearchWidget from './components/SearchWidget';
-import Features from './components/Features';
-import PopularRoutes from './components/PopularRoutes';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import AppCTA from './components/AppCTA';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import SearchResultsPage from './pages/SearchResultsPage';
+import SeatSelectionPage from './pages/SeatSelectionPage';
+import BookingPage from './pages/BookingPage';
+import ConfirmationPage from './pages/ConfirmationPage';
 
 function App() {
   return (
@@ -15,16 +11,14 @@ function App() {
       <div className="app-shell">
         <div className="highway-flow"></div>
         <div className="particle-field"></div>
-        <div className="app-content pb-28 md:pb-0">
-          <Navbar />
-          <Hero />
-          <SearchWidget />
-          <Features />
-          <PopularRoutes />
-          <HowItWorks />
-          <Testimonials />
-          <AppCTA />
-          <Footer />
+        <div className="app-content">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/seats/:busId" element={<SeatSelectionPage />} />
+            <Route path="/booking/:busId" element={<BookingPage />} />
+            <Route path="/confirmation/:bookingId" element={<ConfirmationPage />} />
+          </Routes>
         </div>
       </div>
     </Router>

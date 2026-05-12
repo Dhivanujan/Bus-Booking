@@ -1,8 +1,17 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const bus_controller_1 = require("../controllers/bus.controller");
-const router = (0, express_1.Router)();
-router.post("/", bus_controller_1.addBus);
-router.get("/", bus_controller_1.listBuses);
-exports.default = router;
+const express = require('express');
+const router = express.Router();
+const busController = require('../controllers/bus.controller');
+
+// Search buses by origin, destination, date
+router.get('/search', busController.searchBuses);
+
+// Get single bus details
+router.get('/:id', busController.getBusById);
+
+// Get all buses
+router.get('/', busController.getAllBuses);
+
+// Create a bus (admin)
+router.post('/', busController.createBus);
+
+module.exports = router;

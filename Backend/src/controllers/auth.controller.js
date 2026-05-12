@@ -1,33 +1,79 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleLogin = exports.handleRegister = void 0;
-const auth_service_1 = require("../services/auth.service");
-const zod_1 = require("zod");
-const AuthSchema = zod_1.z.object({
-    email: zod_1.z.string().email(),
-    phone: zod_1.z.string().optional(),
-    name: zod_1.z.string().optional(),
-    password: zod_1.z.string().min(6),
-});
-const handleRegister = async (req, res, next) => {
-    try {
-        const data = AuthSchema.parse(req.body);
-        const result = await (0, auth_service_1.registerUser)(data);
-        res.status(201).json({ success: true, data: result });
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config/env');
+
+// Register
+const register = async (req, res) => {
+  try {
+    const { name, email, phone, password } = req.body;
+
+    // Check if user exists
+    const existing = await User.findOne({ email });
+    if (existing) {
+      return res.status(400).json({ success: false, message: 'Email already registered' });
     }
-    catch (error) {
-        next(error);
-    }
+
+    const hashedPassword = await bcrypt.hash(password, config.BCRYPT_SALT_ROUNDS);
+
+    const user = await User.create({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+    });
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      config.JWT_SECRET,
+      { expiresIn: config.JWT_EXPIRES_IN }
+    );
+
+    res.status(201).json({
+      success: true,
+      data: {
+        user: { id: user._id, name: user.name, email: user.email, role: user.role },
+        token,
+      },
+    });
+  } catch (error) {
+    console.error('Register error:', error);
+    res.status(500).json({ success: false, message: 'Error registering user' });
+  }
 };
-exports.handleRegister = handleRegister;
-const handleLogin = async (req, res, next) => {
-    try {
-        const data = AuthSchema.parse(req.body);
-        const result = await (0, auth_service_1.loginUser)(data);
-        res.json({ success: true, data: result });
+
+// Login
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
-    catch (error) {
-        next(error);
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      config.JWT_SECRET,
+      { expiresIn: config.JWT_EXPIRES_IN }
+    );
+
+    res.json({
+      success: true,
+      data: {
+        user: { id: user._id, name: user.name, email: user.email, role: user.role },
+        token,
+      },
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ success: false, message: 'Error logging in' });
+  }
 };
-exports.handleLogin = handleLogin;
+
+module.exports = { register, login };
