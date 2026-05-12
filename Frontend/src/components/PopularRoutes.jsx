@@ -3,7 +3,6 @@ import {
   Clock3,
   Bus,
   Route,
-  Sparkles,
 } from 'lucide-react';
 
 const routes = [
@@ -11,42 +10,42 @@ const routes = [
     from: 'Colombo',
     to: 'Kandy',
     duration: '3h 45m',
-    price: 24,
+    price: 1800,
     departures: 18,
   },
   {
     from: 'Colombo',
     to: 'Galle',
     duration: '2h 50m',
-    price: 18,
+    price: 1500,
     departures: 22,
   },
   {
     from: 'Kandy',
     to: 'Nuwara Eliya',
     duration: '2h 40m',
-    price: 16,
+    price: 1200,
     departures: 12,
   },
   {
     from: 'Colombo',
     to: 'Jaffna',
     duration: '7h 15m',
-    price: 38,
+    price: 3500,
     departures: 9,
   },
   {
-    from: 'Ella',
-    to: 'Mirissa',
+    from: 'Kurunegala',
+    to: 'Matara',
     duration: '4h 30m',
-    price: 22,
+    price: 2200,
     departures: 10,
   },
   {
     from: 'Negombo',
     to: 'Trincomalee',
     duration: '5h 40m',
-    price: 28,
+    price: 2800,
     departures: 8,
   },
 ];
@@ -94,7 +93,7 @@ const PopularRoutes = () => {
               <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <p className="text-sm text-[#91A0B8]">Starting from</p>
-                  <h4 className="mt-1 text-3xl font-semibold text-white">${r.price}</h4>
+                  <h4 className="mt-1 text-3xl font-semibold text-white">Rs. {r.price.toLocaleString()}</h4>
                 </div>
 
                 <button

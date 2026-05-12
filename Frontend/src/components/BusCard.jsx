@@ -11,7 +11,7 @@ const amenityIcons = {
   'Scenic Route': MapPin,
 };
 
-const BusCard = ({ bus, travelDate, onSelect }) => {
+const BusCard = ({ bus, onSelect }) => {
   const availableSeats = bus.capacity - (bus.bookedCount || 0);
 
   return (

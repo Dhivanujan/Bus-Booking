@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { CheckCircle2, Download, ArrowRight, Loader2, MapPin, Clock, Ticket } from 'lucide-react';
+import { CheckCircle2, Download, ArrowRight, Loader2, Clock, Ticket } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getBookingById } from '../lib/api';
@@ -142,7 +142,7 @@ const ConfirmationPage = () => {
               <div className="inline-block p-3 rounded-xl bg-white/5 border border-white/8">
                 <div className="w-24 h-24 mx-auto grid grid-cols-5 grid-rows-5 gap-0.5">
                   {Array.from({length:25}).map((_,i)=>(
-                    <div key={i} className={`rounded-sm ${Math.random()>0.4?'bg-white/80':'bg-transparent'}`}/>
+                    <div key={i} className={`rounded-sm ${(i * 7 + 3) % 5 > 1 ?'bg-white/80':'bg-transparent'}`}/>
                   ))}
                 </div>
               </div>

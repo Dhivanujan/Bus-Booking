@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 const ROWS = 12;
 const COLS = ['A', 'B', 'C', 'D'];
 
@@ -16,7 +14,7 @@ const generateAllSeats = () => {
 
 const ALL_SEATS = generateAllSeats();
 
-const SeatLayout = ({ bookedSeats = [], selectedSeats = [], onSeatToggle, price = 0 }) => {
+const SeatLayout = ({ bookedSeats = [], selectedSeats = [], onSeatToggle }) => {
   const getSeatState = (seat) => {
     if (bookedSeats.includes(seat)) return 'booked';
     if (selectedSeats.includes(seat)) return 'selected';

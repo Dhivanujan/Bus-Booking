@@ -16,6 +16,10 @@ const SearchWidget = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (!departure || !destination) return;
+    if (departure === destination) {
+      alert("Departure and destination cannot be the same city.");
+      return;
+    }
     const params = new URLSearchParams({
       from: departure,
       to: destination,
