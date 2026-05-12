@@ -32,6 +32,10 @@ const SeatLayout = ({ bookedSeats = [], selectedSeats = [], onSeatToggle }) => {
       <div className="bus-shell">
         {/* Driver section */}
         <div className="driver-section">
+          <div className="door-indicator">
+            <span>DOOR</span>
+          </div>
+          <div className="driver-label">DRIVER</div>
           <div className="steering-wheel">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
               <circle cx="18" cy="18" r="15" stroke="rgba(255,255,255,0.25)" strokeWidth="2.5"/>
@@ -41,10 +45,6 @@ const SeatLayout = ({ bookedSeats = [], selectedSeats = [], onSeatToggle }) => {
               <line x1="3" y1="18" x2="13" y2="18" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
               <line x1="23" y1="18" x2="33" y2="18" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"/>
             </svg>
-          </div>
-          <div className="driver-label">DRIVER</div>
-          <div className="door-indicator">
-            <span>DOOR</span>
           </div>
         </div>
 
