@@ -71,17 +71,7 @@ const FilterSidebar = ({ filters, onChange, onReset }) => {
           Reset
         </button>
       </div>
-
-      {/* Active Filters */}
-      {activeFilters > 0 && (
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1 text-xs text-coral bg-coral/10 border border-coral/20 px-3 py-1.5 rounded-full">
-            <Sparkles size={12} />
-            {activeFilters} active filter{activeFilters > 1 ? 's' : ''}
-          </div>
-        </div>
-      )}
-
+      
       {/* Bus Type */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">

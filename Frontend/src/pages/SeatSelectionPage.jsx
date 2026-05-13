@@ -55,7 +55,7 @@ const SeatSelectionPage = () => {
   };
 
   const handleProceed = () => {
-    if (selectedSeats.length === 0) return;
+    if (selectedSeats.length === 0 || !travelDate) return;
     const params = new URLSearchParams({
       date: travelDate,
       seats: selectedSeats.join(','),
@@ -63,6 +63,13 @@ const SeatSelectionPage = () => {
     });
     navigate(`/booking/${busId}?${params.toString()}`);
   };
+
+  const proceedDisabled = selectedSeats.length === 0 || !travelDate;
+  const proceedHint = !travelDate
+    ? 'Select a travel date to continue.'
+    : selectedSeats.length === 0
+      ? 'Select at least one seat to continue.'
+      : '';
 
   if (loading) {
     return (
@@ -148,18 +155,24 @@ const SeatSelectionPage = () => {
               selectedSeats={selectedSeats}
               travelDate={travelDate}
               onRemoveSeat={handleRemoveSeat}
+              action={(
+                <div>
+                  <button
+                    onClick={handleProceed}
+                    disabled={proceedDisabled}
+                    className={`btn-primary btn-primary--lg w-full ${
+                      proceedDisabled ? 'opacity-40 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    Proceed to Booking
+                    <ArrowRight size={18} />
+                  </button>
+                  {proceedHint && (
+                    <p className="text-xs text-gray-500 mt-2">{proceedHint}</p>
+                  )}
+                </div>
+              )}
             />
-
-            <button
-              onClick={handleProceed}
-              disabled={selectedSeats.length === 0}
-              className={`btn-primary btn-primary--lg w-full ${
-                selectedSeats.length === 0 ? 'opacity-40 cursor-not-allowed' : ''
-              }`}
-            >
-              Proceed to Booking
-              <ArrowRight size={18} />
-            </button>
           </div>
         </div>
       </div>

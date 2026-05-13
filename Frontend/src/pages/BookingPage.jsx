@@ -11,6 +11,17 @@ const METHODS = [
   { id: 'cash', label: 'Cash on Boarding', icon: Banknote, desc: 'Pay when you board' },
 ];
 
+const formatTravelDate = (isoDate) => {
+  if (!isoDate) return '';
+  const parts = isoDate.split('-').map(Number);
+  if (parts.length !== 3 || parts.some(Number.isNaN)) return isoDate;
+  const [year, month, day] = parts;
+  const localDate = new Date(year, month - 1, day);
+  return localDate.toLocaleDateString('en-LK', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  });
+};
+
 const BookingPage = () => {
   const { busId } = useParams();
   const [searchParams] = useSearchParams();
@@ -124,7 +135,9 @@ const BookingPage = () => {
                 <div className="pb-4 border-b border-white/8">
                   <p className="text-sm font-medium text-white">{bus.busName}</p>
                   <p className="text-xs text-gray-500 mt-1">{bus.route.origin} → {bus.route.destination}</p>
-                  {travelDate && <p className="text-xs text-gray-500 mt-0.5">📅 {new Date(travelDate).toLocaleDateString('en-LK',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}</p>}
+                  {travelDate && (
+                    <p className="text-xs text-gray-500 mt-0.5">📅 {formatTravelDate(travelDate)}</p>
+                  )}
                   <p className="text-xs text-gray-500 mt-0.5">🕐 {bus.departureTime} → {bus.arrivalTime}</p>
                 </div>
                 <div className="py-4 border-b border-white/8">
