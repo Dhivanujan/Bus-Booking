@@ -65,7 +65,7 @@ const Navbar = () => {
         }`}
       >
         <div className="container">
-          <div className="flex items-center justify-between h-18">
+          <div className="flex items-center justify-between h-[72px]">
             <button
               onClick={() => scrollTo("hero")}
               className="flex items-center gap-3"
@@ -99,7 +99,7 @@ const Navbar = () => {
                   >
                     {item.label}
                     <span
-                      className={`absolute left-0 -bottom-2 h-0.5 w-full rounded-full bg-linear-to-r from-sunset to-teal transition-opacity ${
+                      className={`absolute left-0 -bottom-2 h-0.5 w-full rounded-full bg-gradient-to-r from-sunset to-teal transition-opacity ${
                         isActive ? "opacity-100" : "opacity-0"
                       }`}
                     />

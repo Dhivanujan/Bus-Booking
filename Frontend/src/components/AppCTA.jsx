@@ -44,7 +44,7 @@ const AppCTA = () => {
             </div>
 
             <div className="relative flex justify-center">
-              <div className="glass-card p-6 w-full max-w-90">
+              <div className="glass-card p-6 w-full max-w-[360px]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs uppercase tracking-[0.2em] text-[#7E8CA5]">LuxeBus Mobile</p>
@@ -85,7 +85,7 @@ const AppCTA = () => {
                     <span className="chip">72% complete</span>
                   </div>
                   <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                    <div className="h-full w-[72%] rounded-full bg-linear-to-r from-cyan-400 to-fuchsia-500" />
+                    <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500" />
                   </div>
                 </div>
               </div>
