@@ -6,86 +6,120 @@ const mongoose = require('mongoose');
 
 // Create a new booking
 const createBooking = async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-  try {
-    const { busId, travelDate, selectedSeats, passengerName, passengerEmail, passengerPhone, paymentMethod } = req.body;
+  const { busId, travelDate, selectedSeats, passengerName, passengerEmail, passengerPhone, paymentMethod } = req.body;
 
-    // Validate bus exists
-    const bus = await Bus.findById(busId).session(session);
-    if (!bus) {
-      await session.abortTransaction();
-      session.endSession();
-      return res.status(404).json({ success: false, message: 'Bus not found' });
-    }
+  const runBookingFlow = async (useTransaction) => {
+    const session = useTransaction ? await mongoose.startSession() : null;
+    if (session) session.startTransaction();
+    try {
+      // Validate bus exists
+      const busQuery = Bus.findById(busId);
+      const bus = await (session ? busQuery.session(session) : busQuery);
+      if (!bus) {
+        if (session) {
+          await session.abortTransaction();
+          session.endSession();
+        }
+        return { errorResponse: { status: 404, body: { success: false, message: 'Bus not found' } } };
+      }
 
-    // Check for already booked seats
-    let seatDoc = await SeatAvailability.findOne({ busId, date: travelDate }).session(session);
-    if (seatDoc) {
-      const conflict = selectedSeats.filter(s => seatDoc.bookedSeats.includes(s));
-      if (conflict.length > 0) {
+      // Check for already booked seats
+      const seatQuery = SeatAvailability.findOne({ busId, date: travelDate });
+      let seatDoc = await (session ? seatQuery.session(session) : seatQuery);
+      if (seatDoc) {
+        const conflict = selectedSeats.filter(s => seatDoc.bookedSeats.includes(s));
+        if (conflict.length > 0) {
+          if (session) {
+            await session.abortTransaction();
+            session.endSession();
+          }
+          return {
+            errorResponse: {
+              status: 409,
+              body: {
+                success: false,
+                message: `Seats already booked: ${conflict.join(', ')}. Please select different seats.`,
+              },
+            },
+          };
+        }
+      }
+
+      // Calculate total
+      const totalAmount = bus.price * selectedSeats.length;
+
+      // Create booking
+      const booking = await Booking.create([{
+        busId,
+        travelDate,
+        selectedSeats,
+        totalAmount,
+        passengerName,
+        passengerEmail,
+        passengerPhone,
+        paymentStatus: 'CONFIRMED',
+      }], session ? { session } : undefined);
+
+      // Update seat availability
+      if (seatDoc) {
+        seatDoc.bookedSeats.push(...selectedSeats);
+        await seatDoc.save(session ? { session } : undefined);
+      } else {
+        await SeatAvailability.create([{
+          busId,
+          date: travelDate,
+          bookedSeats: selectedSeats,
+        }], session ? { session } : undefined);
+      }
+
+      // Create payment record
+      const payment = await Payment.create([{
+        bookingId: booking[0]._id,
+        amount: totalAmount,
+        paymentMethod: paymentMethod || 'card',
+        status: 'SUCCESS',
+      }], session ? { session } : undefined);
+
+      if (session) {
+        await session.commitTransaction();
+        session.endSession();
+      }
+
+      // Populate bus details for response
+      const populatedBooking = await Booking.findById(booking[0]._id).populate('busId');
+
+      return { data: { booking: populatedBooking, payment: payment[0] } };
+    } catch (error) {
+      if (session) {
         await session.abortTransaction();
         session.endSession();
-        return res.status(409).json({
-          success: false,
-          message: `Seats already booked: ${conflict.join(', ')}. Please select different seats.`,
-        });
+      }
+      throw error;
+    }
+  };
+
+  try {
+    const result = await runBookingFlow(true);
+    if (result.errorResponse) {
+      return res.status(result.errorResponse.status).json(result.errorResponse.body);
+    }
+    return res.status(201).json({ success: true, data: result.data });
+  } catch (error) {
+    // Standalone MongoDB does not support transactions; retry without session.
+    if (error?.code === 20 && /Transaction numbers are only allowed/i.test(error.message)) {
+      try {
+        const fallback = await runBookingFlow(false);
+        if (fallback.errorResponse) {
+          return res.status(fallback.errorResponse.status).json(fallback.errorResponse.body);
+        }
+        return res.status(201).json({ success: true, data: fallback.data });
+      } catch (fallbackError) {
+        console.error('Create booking error:', fallbackError);
+        return res.status(500).json({ success: false, message: 'Error creating booking' });
       }
     }
-
-    // Calculate total
-    const totalAmount = bus.price * selectedSeats.length;
-
-    // Create booking
-    const booking = await Booking.create([{
-      busId,
-      travelDate,
-      selectedSeats,
-      totalAmount,
-      passengerName,
-      passengerEmail,
-      passengerPhone,
-      paymentStatus: 'CONFIRMED',
-    }], { session });
-
-    // Update seat availability
-    if (seatDoc) {
-      seatDoc.bookedSeats.push(...selectedSeats);
-      await seatDoc.save({ session });
-    } else {
-      await SeatAvailability.create([{
-        busId,
-        date: travelDate,
-        bookedSeats: selectedSeats,
-      }], { session });
-    }
-
-    // Create payment record
-    const payment = await Payment.create([{
-      bookingId: booking[0]._id,
-      amount: totalAmount,
-      paymentMethod: paymentMethod || 'card',
-      status: 'SUCCESS',
-    }], { session });
-
-    await session.commitTransaction();
-    session.endSession();
-
-    // Populate bus details for response
-    const populatedBooking = await Booking.findById(booking[0]._id).populate('busId');
-
-    res.status(201).json({
-      success: true,
-      data: {
-        booking: populatedBooking,
-        payment: payment[0],
-      },
-    });
-  } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
     console.error('Create booking error:', error);
-    res.status(500).json({ success: false, message: 'Error creating booking' });
+    return res.status(500).json({ success: false, message: 'Error creating booking' });
   }
 };
 

@@ -150,7 +150,7 @@ const BookingPage = () => {
                   <div className="flex justify-between text-sm"><span className="text-gray-400">Rs. {bus.price.toLocaleString()} × {seats.length}</span><span className="text-white">Rs. {total.toLocaleString()}</span></div>
                   <div className="flex justify-between font-bold pt-2 border-t border-white/8"><span className="text-white">Total</span><span className="text-coral text-xl">Rs. {total.toLocaleString()}</span></div>
                 </div>
-                <button type="submit" disabled={submitting} onClick={handleSubmit} className={`btn-primary btn-primary--lg w-full mt-6 ${submitting?'opacity-60':''}`}>
+                <button type="submit" disabled={submitting} className={`btn-primary btn-primary--lg w-full mt-6 ${submitting?'opacity-60':''}`}>
                   {submitting ? <><Loader2 size={18} className="animate-spin"/>Processing...</> : <><Lock size={16}/>Confirm & Pay</>}
                 </button>
               </div>
