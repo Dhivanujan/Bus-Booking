@@ -13,6 +13,7 @@ import {
 const navItems = [
   { id: "hero", label: "Home" },
   { id: "search", label: "Book" },
+  { id: "features", label: "Features" },
   { id: "routes", label: "Routes" },
   { id: "how", label: "Experience" },
   { id: "reviews", label: "Reviews" },
@@ -26,32 +27,42 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+      const navOffset = window.innerWidth >= 768 ? 110 : 96;
+      let nextActive = null;
 
-      const sections = navItems.map((item) => document.getElementById(item.id));
-
-      const scrollPos = window.scrollY + 150;
-
-      sections.forEach((section) => {
-        if (
-          section &&
-          scrollPos >= section.offsetTop &&
-          scrollPos < section.offsetTop + section.offsetHeight
-        ) {
-          setActive(section.id);
+      for (const item of navItems) {
+        const section = document.getElementById(item.id);
+        if (!section) continue;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= navOffset && rect.bottom >= navOffset) {
+          nextActive = item.id;
+          break;
         }
-      });
+      }
+
+      if (nextActive) {
+        setActive((prev) => (prev === nextActive ? prev : nextActive));
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   const scrollTo = (id) => {
     setMenuOpen(false);
-
-    document.getElementById(id)?.scrollIntoView({
+    const target = document.getElementById(id);
+    if (!target) return;
+    setActive(id);
+    target.scrollIntoView({
       behavior: "smooth",
+      block: "start",
     });
   };
 
